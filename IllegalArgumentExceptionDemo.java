@@ -1,21 +1,27 @@
-// Perform the operatio to demonstrate IllegalArgumentException
+// Perform the operation to demonstrate IllegalArgumentException
 import java.util.Scanner;
 
 class IllegalArgumentExceptionDemo {
     // Method to generate IllegalArgumentException
     public static void generateException(String str) {
-        // Attempt to access an index beyond the length of the string
-        String subString = str.substring(str.length()-1, 0); // This will throw the exception
-    
-        // Try to display the subString
+        if (str.length() < 2) {
+            throw new IllegalArgumentException("String must have at least 2 characters!");
+        }
+
+        // Invalid substring indices (end < start)
+        if (str.length() > 1) {
+            throw new IllegalArgumentException("Invalid substring indices: start > end");
+        }
+
+        // Attempting invalid substring operation (this line will not be reached due to the throw above)
+        String subString = str.substring(str.length(), 0);
         System.out.println("Substring: " + subString);
     }
     
     // Method to handle RuntimeException
     public static void handleException(String str) {
         try {
-            // Attempt to generate a substring with invalid indices
-            String subStr = str.substring(5, 2); // Start index greater than end index
+            generateException(str); // Call method that throws IllegalArgumentException
         } catch (IllegalArgumentException e) {
             System.out.println("Caught IllegalArgumentException: " + e.getMessage());
         } catch (RuntimeException e) {
@@ -31,7 +37,7 @@ class IllegalArgumentExceptionDemo {
         String userInput = input.next();
 
         // Method to generate the Exception
-        generateException(userInput);
+        // generateException(userInput);
 
         // Method to handle the RuntimeException
         handleException(userInput);
